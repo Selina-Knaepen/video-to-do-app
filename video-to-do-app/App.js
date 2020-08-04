@@ -6,6 +6,8 @@
  * @flow strict-local
  */
 
+import DoingScreen from './screens/doing';
+import IdeasScreen from './screens/ideas';
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import {
@@ -60,18 +62,6 @@ function App() {
         />
       </Tab.Navigator>
     </NavigationContainer>
-  );
-}
-
-function DoingScreen() {
-  return (
-    <Text>Doing Screen</Text>
-  );
-}
-
-function IdeasScreen() {
-  return (
-    <Text>Ideas Screen</Text>
   );
 }
 

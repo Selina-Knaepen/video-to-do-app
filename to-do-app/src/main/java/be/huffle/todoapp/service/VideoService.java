@@ -2,6 +2,7 @@ package be.huffle.todoapp.service;
 
 import be.huffle.todoapp.dao.VideoDao;
 import be.huffle.todoapp.model.Video;
+import be.huffle.todoapp.model.VideoState;
 import be.huffle.todoapp.resources.VideoResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,21 +16,11 @@ public class VideoService {
 	@Autowired
 	private VideoDao videoDao;
 
-	public List<VideoResource> getVideos() {
-		return videoDao.findAll().stream().map(this::mapVideoToVideoResource).collect(Collectors.toList());
-	}
-
 	public List<VideoResource> getIdeaVideos() {
-		List<VideoResource> allVideos = getVideos();
-		List<VideoResource> ideaVideos = new ArrayList<>();
-
-		for (VideoResource videoResource : allVideos) {
-			if (videoResource.getState().toLowerCase().equals("ideas")) {
-				ideaVideos.add(videoResource);
-			}
-		}
-
-		return ideaVideos;
+		return videoDao.findVideoByVideoState(VideoState.IDEA)
+				.stream()
+				.map(this::mapVideoToVideoResource)
+				.collect(Collectors.toList());
 	}
 
 	private VideoResource mapVideoToVideoResource(Video video) {

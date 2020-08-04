@@ -1,7 +1,7 @@
 package be.huffle.todoapp.model;
 
 public enum VideoState {
-	IDEAS,
+	IDEA,
 	DOING,
 	DONE
 }
