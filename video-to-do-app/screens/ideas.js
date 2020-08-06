@@ -39,7 +39,12 @@ export default class IdeasScreen extends Component {
 }
 
   _onPress(item) {
-
+    this.props.navigation.navigate('Edit', {
+      screen: 'Details',
+      params: {
+        item: item
+      }
+    })
   }
 
   render() {
