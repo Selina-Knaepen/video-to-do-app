@@ -1,7 +1,16 @@
-import React, { Component } from 'react'
-import VideoService from '../services/video'
-import { Text, FlatList, View, TouchableHighlight } from 'react-native'
+import React, { Component } from 'react';
+import VideoService from '../services/video';
+import {
+  Text,
+  FlatList,
+  View,
+  TouchableHighlight,
+  StyleSheet,
+  ScrollView
+} from 'react-native';
 import Task from '../models/task';
+import FAB from 'react-native-fab';
+import AddScreen from './add';
 
 export default class IdeasScreen extends Component {
   constructor() {
@@ -21,7 +30,7 @@ export default class IdeasScreen extends Component {
   FlatListItemSeparator = () => {
   return (
     <View
-      style={{
+      style = {{
         height: 1,
         width: "100%",
       }}
@@ -35,19 +44,30 @@ export default class IdeasScreen extends Component {
 
   render() {
     return (
+      <View style = {{ flex: 1 }}>
       <FlatList
-        data = {this.state.ideas}
+        data = { this.state.ideas }
         ItemSeparatorComponent = { this.FlatListItemSeparator }
-        renderItem = {({item, index, separators}) => (
+        renderItem = {({ item, index, separators }) => (
           <TouchableHighlight
-            keyExtractor = {(item) => item.id}
-            onPress = {() => this._onPress(item)}>
+            keyExtractor = { (item) => item.id }
+            onPress = { () => this._onPress(item) }>
             <View style = {{ backgroundColor: 'white' }}>
-              <Text style = {{margin: 15}}>{item.title}</Text>
+              <Text style = {{ margin: 15 }}>{ item.title }</Text>
             </View>
           </TouchableHighlight>
         )}
       />
+
+      <FAB
+        buttonColor = "tomato"
+        iconTextColor = "#FFFFFF"
+        onClickAction = {() => {
+          this.props.navigation.navigate('Edit', {screen: 'AddIdea'})
+        }}
+        visible = { true }
+        />
+      </View>
     );
   }
 }

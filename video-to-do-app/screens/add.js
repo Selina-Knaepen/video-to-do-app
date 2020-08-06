@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 
-export default class DoingScreen extends Component {
+export default class AddScreen extends Component {
   render() {
-    return (
-      <Text>Doing Screen</Text>
+    return(
+      <Text>Add Screen</Text>
     );
   }
 }

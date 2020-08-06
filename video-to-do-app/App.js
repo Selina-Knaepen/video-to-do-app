@@ -8,6 +8,9 @@
 
 import DoingScreen from './screens/doing';
 import IdeasScreen from './screens/ideas';
+import AddScreen from './screens/add';
+import StatsScreen from './screens/stats';
+import DoneScreen from './screens/done';
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import {
@@ -30,51 +33,68 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-        labelStyle: {
-          padding: 15,
-          fontSize: 16
-        }
-      }}
+      <Stack.Navigator
+        screenOptions = {{ headerShown: false }}
       >
-        <Tab.Screen
-          name="Doing"
-          component={DoingScreen}
-        />
-        <Tab.Screen
-          name="Ideas"
-          component={IdeasScreen}
-        />
-        <Tab.Screen
-          name="Stats"
-          component={StatsScreen}
-        />
-        <Tab.Screen
-          name="Done"
-          component={DoneScreen}
-        />
-      </Tab.Navigator>
+      <Stack.Screen
+        name = "Tabs"
+        component = { Tabs }
+      />
+      <Stack.Screen
+        name = "Edit"
+        component = { Edit }
+      />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-function StatsScreen() {
-  return (
-    <Text>Stats Screen</Text>
+function Tabs() {
+  return(
+    <Tab.Navigator
+    tabBarOptions = {{
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+      labelStyle: {
+        padding: 15,
+        fontSize: 16
+      }
+    }}
+    >
+      <Tab.Screen
+        name = "Doing"
+        component = { DoingScreen }
+      />
+      <Tab.Screen
+        name = "Ideas"
+        component = { IdeasScreen }
+      />
+      <Tab.Screen
+        name = "Stats"
+        component = { StatsScreen }
+      />
+      <Tab.Screen
+        name = "Done"
+        component = { DoneScreen }
+      />
+    </Tab.Navigator>
   );
 }
 
-function DoneScreen() {
-  return (
-    <Text>Done Screen</Text>
-  );
+function Edit() {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen
+          name = "AddIdea"
+          component = { AddScreen }
+      />
+    </Stack.Navigator>
+    );
 }
 
 export default App;
