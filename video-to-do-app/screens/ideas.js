@@ -5,8 +5,7 @@ import {
   FlatList,
   View,
   TouchableHighlight,
-  StyleSheet,
-  ScrollView
+  StyleSheet
 } from 'react-native';
 import Task from '../models/task';
 import FAB from 'react-native-fab';
