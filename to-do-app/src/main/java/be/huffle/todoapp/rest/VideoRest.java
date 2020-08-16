@@ -19,4 +19,7 @@ public class VideoRest {
 	public List<VideoResource> getIdeas() {
 		return videoService.getIdeaVideos();
 	}
+
+	@GetMapping("done")
+	public List<VideoResource> getDone() { return videoService.getDoneVideos(); }
 }

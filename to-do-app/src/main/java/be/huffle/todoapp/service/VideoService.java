@@ -23,6 +23,13 @@ public class VideoService {
 				.collect(Collectors.toList());
 	}
 
+	public List<VideoResource> getDoneVideos() {
+		return videoDao.findVideoByVideoState(VideoState.DONE)
+				.stream()
+				.map(this::mapVideoToVideoResource)
+				.collect(Collectors.toList());
+	}
+
 	private VideoResource mapVideoToVideoResource(Video video) {
 		VideoResource videoResource = new VideoResource();
 		videoResource.setId(video.getId());

@@ -92,6 +92,7 @@ function Edit() {
     <Stack.Navigator>
       <Stack.Screen
         name = "AddIdea"
+        options = {{ title: "Add Idea" }}
         component = { AddScreen }
       />
       <Stack.Screen
