@@ -12,6 +12,7 @@ import AddScreen from './screens/add';
 import StatsScreen from './screens/stats';
 import DoneScreen from './screens/done';
 import DetailsScreen from './screens/details';
+import EditScreen from './screens/edit';
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import {
@@ -98,6 +99,11 @@ function Edit() {
       <Stack.Screen
         name = "Details"
         component = { DetailsScreen }
+      />
+      <Stack.Screen
+        name = "EditVideo"
+        options = {{ title: "Edit" }}
+        component = { EditScreen }
       />
     </Stack.Navigator>
     );
