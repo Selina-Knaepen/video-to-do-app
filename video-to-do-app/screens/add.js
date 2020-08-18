@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import VideoService from '../services/video';
 import {
   Text,
   View,
   Button,
-  StyleSheet
+  StyleSheet,
+  ToastAndroid
 } from 'react-native';
 
-import t from 'tcomb-form-native'; // 0.6.9
+import t from 'tcomb-form-native';
 
 const Form = t.form.Form;
 
 const Idea = t.struct({
   title: t.String,
-  totalFrames: t.Number,
-  currentFrame: t.Number
+  totalFrames: t.Number
 });
 
 const styles = StyleSheet.create({
@@ -24,13 +25,33 @@ const styles = StyleSheet.create({
 });
 
 export default class AddScreen extends Component {
+  constructor() {
+    super();
+    this.videoService = new VideoService();
+  }
+
   handleSubmit = () => {
+    const value = this.refs.form.getValue();
+    if (value) {
+        this.videoService.createIdea(value.title, value.totalFrames)
+        .then(() => {
+          this.props.navigation.navigate('Tabs', {
+            screen: 'Ideas'
+          });
+        })
+        .catch((error) => {
+          ToastAndroid.show(error.message, ToastAndroid.LONG);
+        });
+    }
   };
 
   render() {
     return(
       <View style = { styles.container }>
-        <Form type = { Idea }/>
+        <Form
+          ref = "form"
+          type = { Idea }
+        />
         <Button title = "Add" onPress = { this.handleSubmit }
         color = "tomato"/>
       </View>

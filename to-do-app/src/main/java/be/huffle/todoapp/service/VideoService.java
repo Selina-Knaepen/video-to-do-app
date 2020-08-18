@@ -1,8 +1,10 @@
 package be.huffle.todoapp.service;
 
 import be.huffle.todoapp.dao.VideoDao;
+import be.huffle.todoapp.exceptions.InvalidVideoException;
 import be.huffle.todoapp.model.Video;
 import be.huffle.todoapp.model.VideoState;
+import be.huffle.todoapp.resources.VideoCreateResoure;
 import be.huffle.todoapp.resources.VideoResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,19 @@ public class VideoService {
 				.stream()
 				.map(this::mapVideoToVideoResource)
 				.collect(Collectors.toList());
+	}
+
+	public VideoResource createIdea(VideoCreateResoure videoCreateResoure) throws InvalidVideoException {
+		if (videoCreateResoure.getTotalFrames() <= 0) {
+			throw new InvalidVideoException("The video needs to have more than 0 frames");
+		}
+
+		Video video = new Video();
+		video.setTitle(videoCreateResoure.getTitle());
+		video.setTotalFrames(videoCreateResoure.getTotalFrames());
+		video.setCurrentFrame(0);
+		video.setVideoState(VideoState.IDEA);
+		return mapVideoToVideoResource(videoDao.save(video));
 	}
 
 	private VideoResource mapVideoToVideoResource(Video video) {

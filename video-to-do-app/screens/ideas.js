@@ -21,9 +21,15 @@ export default class IdeasScreen extends Component {
   }
 
   componentDidMount() {
-    this.videoService.getIdeas().then((ideas) => {
-      this.setState({ideas: ideas})
-    })
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.videoService.getIdeas().then((ideas) => {
+        this.setState({ideas: ideas})
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   FlatListItemSeparator = () => {

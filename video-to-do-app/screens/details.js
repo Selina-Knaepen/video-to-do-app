@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 export default class DetailsScreen extends Component {
+  item = this.props.route.params.item
+
   render() {
     return(
-      <Text>{ this.props.route.params.item.title }</Text>
+      <View>
+        <Text>{ this.item.title }</Text>
+        <Text>{ this.item.totalFrames }</Text>
+        <Text>{ this.item.currentFrame }</Text>
+      </View>
     );
   }
 }
