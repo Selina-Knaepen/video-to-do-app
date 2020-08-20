@@ -45,6 +45,26 @@ export default class VideoService {
           throw new Error(error.message);
         })
       }
+    });
+  }
+
+  moveIdeaToDoing(id) {
+    return fetch(seeHome + 'ideaToDoing/' + id, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
     })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json()
+        .then(error => {
+          throw new Error(error.message);
+        })
+      }
+    });
   }
 }

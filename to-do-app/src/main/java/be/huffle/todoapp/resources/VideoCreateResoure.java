@@ -3,6 +3,7 @@ package be.huffle.todoapp.resources;
 public class VideoCreateResoure {
 	private String title;
 	private int totalFrames;
+	private int currentFrame;
 
 	public String getTitle() {
 		return title;
@@ -18,5 +19,13 @@ public class VideoCreateResoure {
 
 	public void setTotalFrames(int totalFrames) {
 		this.totalFrames = totalFrames;
+	}
+
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+
+	public void setCurrentFrame(int currentFrame) {
+		this.currentFrame = currentFrame;
 	}
 }

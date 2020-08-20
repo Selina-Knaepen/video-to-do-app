@@ -1,6 +1,7 @@
 package be.huffle.todoapp.service;
 
 import be.huffle.todoapp.dao.VideoDao;
+import be.huffle.todoapp.exceptions.InvalidActionException;
 import be.huffle.todoapp.exceptions.InvalidVideoException;
 import be.huffle.todoapp.model.Video;
 import be.huffle.todoapp.model.VideoState;
@@ -43,6 +44,18 @@ public class VideoService {
 		video.setCurrentFrame(0);
 		video.setVideoState(VideoState.IDEA);
 		return mapVideoToVideoResource(videoDao.save(video));
+	}
+
+	public VideoResource moveIdeaToDoing(long id) throws InvalidActionException {
+		List<Video> doingVideos = videoDao.findVideoByVideoState(VideoState.DOING);
+		if (doingVideos.isEmpty()) {
+			Video video = videoDao.findById(id).orElse(null);
+			video.setVideoState(VideoState.DOING);
+			return mapVideoToVideoResource(videoDao.save(video));
+		} else {
+			throw new InvalidActionException("There is already a video being made");
+		}
+
 	}
 
 	private VideoResource mapVideoToVideoResource(Video video) {

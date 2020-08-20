@@ -1,5 +1,6 @@
 package be.huffle.todoapp.rest;
 
+import be.huffle.todoapp.exceptions.InvalidActionException;
 import be.huffle.todoapp.exceptions.InvalidVideoException;
 import be.huffle.todoapp.resources.VideoCreateResoure;
 import be.huffle.todoapp.resources.VideoResource;
@@ -33,6 +34,16 @@ public class VideoRest {
 			return new ResponseEntity<VideoResource>(videoResource, HttpStatus.CREATED);
 		}
 		catch (InvalidVideoException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
+	@PutMapping("ideaToDoing/{id}")
+	public ResponseEntity<VideoResource> moveIdeaToDoing(@PathVariable("id") long id) {
+		try {
+			VideoResource videoResource = videoService.moveIdeaToDoing(id);
+			return new ResponseEntity<VideoResource>(videoResource, HttpStatus.OK);
+		} catch (InvalidActionException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}

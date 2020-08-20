@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import VideoService from '../services/video';
 import {
   Text,
   View,
   Button,
-  StyleSheet
+  StyleSheet,
+  ToastAndroid
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -14,11 +16,26 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
     fontSize: 16
+  },
+  viewContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  buttonContainer: {
+    margin: 2,
+    flex: 1
   }
 });
 
 export default class DetailsScreen extends Component {
   item = this.props.route.params.item
+  videoService = new VideoService();
+
+  // constructor() {
+  //   super();
+  //   this.videoService = new VideoService();
+  // }
 
   handleSubmit = () => {
     this.props.navigation.navigate('Edit', {
@@ -29,9 +46,25 @@ export default class DetailsScreen extends Component {
     });
   }
 
+  onPress = () => {
+    this.videoService.moveIdeaToDoing(this.item.id)
+      .then(() => {
+        ToastAndroid.show('The idea has been successfully added to doing',
+        ToastAndroid.LONG);
+        this.props.navigation.navigate('Tabs', {
+          screen: 'Doing'
+        });
+      })
+      .catch((error) => {
+        ToastAndroid.show(error.message, ToastAndroid.LONG);
+      })
+  }
+
   render() {
     return(
       <View style = { styles.container }>
+        <Text>{ this.item.state }</Text>
+
         <Text style = { styles.label }>Title:</Text>
         <Text>{ this.item.title }</Text>
 
@@ -43,12 +76,24 @@ export default class DetailsScreen extends Component {
         <Text style = { styles.label }>Current Frame:</Text>
         <Text>{ this.item.currentFrame }</Text>
 
-        <View style = {{ marginTop: 20 }}/>
+        <View style = { styles.viewContainer }>
+        <View style = { styles.buttonContainer }>
         <Button
-          title = "Edit"
+          title = 'Edit'
           onPress = { this.handleSubmit }
-          color = "tomato"
+          color = 'tomato'
         />
+        </View>
+
+        <View style = { styles.buttonContainer }>
+        <Button
+          title = 'Start'
+          onPress = { this.onPress }
+          color = 'orangered'
+        />
+        </View>
+        </View>
+
       </View>
     );
   }
