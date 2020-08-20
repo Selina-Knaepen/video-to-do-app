@@ -15,16 +15,25 @@ export default class IdeasScreen extends Component {
   constructor() {
     super();
     this.state = {
-      ideas: []
+      ideas: [],
+      seed: 1,
+      refreshing: false
     };
     this.videoService = new VideoService();
   }
 
+  getData() {
+    this.videoService.getIdeas().then((ideas) => {
+      this.setState({
+        ideas: ideas,
+        refreshing: false
+      })
+    });
+  }
+
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
-      this.videoService.getIdeas().then((ideas) => {
-        this.setState({ideas: ideas})
-      });
+      this.getData();
     });
   }
 
@@ -41,7 +50,7 @@ export default class IdeasScreen extends Component {
       }}
     />
   );
-}
+  }
 
   _onPress(item) {
     this.props.navigation.navigate('Edit', {
@@ -50,6 +59,17 @@ export default class IdeasScreen extends Component {
         item: item
       }
     })
+  }
+
+  handleRefresh = () => {
+    this.setState({
+      refreshing: true,
+      seed: this.state.seed + 1
+    },
+    () => {
+      this.getData();
+    }
+  );
   }
 
   render() {
@@ -67,6 +87,8 @@ export default class IdeasScreen extends Component {
             </View>
           </TouchableHighlight>
         )}
+        refreshing = { this.state.refreshing }
+        onRefresh = { this.handleRefresh }
       />
 
       <FAB
