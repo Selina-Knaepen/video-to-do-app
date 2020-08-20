@@ -27,7 +27,7 @@ export default class DoneScreen extends Component {
     <View
       style = {{
         height: 1,
-        width: "100%",
+        width: '100%',
       }}
     />
   );

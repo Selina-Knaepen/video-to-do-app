@@ -5,7 +5,8 @@ import {
   View,
   Button,
   StyleSheet,
-  ToastAndroid
+  ToastAndroid,
+  Alert
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -32,11 +33,6 @@ export default class DetailsScreen extends Component {
   item = this.props.route.params.item
   videoService = new VideoService();
 
-  // constructor() {
-  //   super();
-  //   this.videoService = new VideoService();
-  // }
-
   handleSubmit = () => {
     this.props.navigation.navigate('Edit', {
       screen: 'EditVideo',
@@ -57,14 +53,41 @@ export default class DetailsScreen extends Component {
       })
       .catch((error) => {
         ToastAndroid.show(error.message, ToastAndroid.LONG);
-      })
+      });
+  }
+
+  removeIdea = () => {
+    this.videoService.deleteIdea(this.item.id)
+      .then(() => {
+        ToastAndroid.show('The idea has been successfully removed',
+        ToastAndroid.LONG);
+        this.props.navigation.navigate('Tabs', {
+          screen: 'Ideas'
+        });
+      });
+  }
+
+  createAlert = () => {
+    Alert.alert(
+      'Remove Idea',
+      'Are you sure you want to remove this idea?',
+      [
+        {
+          text: 'No',
+          style: 'canel'
+        },
+        {
+          text: 'Yes',
+          onPress: this.removeIdea
+        }
+      ],
+      { cancelable: false }
+    );
   }
 
   render() {
     return(
       <View style = { styles.container }>
-        <Text>{ this.item.state }</Text>
-
         <Text style = { styles.label }>Title:</Text>
         <Text>{ this.item.title }</Text>
 
@@ -77,21 +100,29 @@ export default class DetailsScreen extends Component {
         <Text>{ this.item.currentFrame }</Text>
 
         <View style = { styles.viewContainer }>
-        <View style = { styles.buttonContainer }>
-        <Button
-          title = 'Edit'
-          onPress = { this.handleSubmit }
-          color = 'tomato'
-        />
+          <View style = { styles.buttonContainer }>
+            <Button
+              title = 'Edit'
+              onPress = { this.handleSubmit }
+              color = 'tomato'
+            />
+          </View>
+
+          <View style = { styles.buttonContainer }>
+            <Button
+              title = 'Start'
+              onPress = { this.onPress }
+              color = 'orangered'
+            />
+          </View>
         </View>
 
-        <View style = { styles.buttonContainer }>
-        <Button
-          title = 'Start'
-          onPress = { this.onPress }
-          color = 'orangered'
-        />
-        </View>
+        <View style = {{ padding: 10 }}>
+          <Button
+            title = 'Remove'
+            onPress = { this.createAlert }
+            color = 'red'
+          />
         </View>
 
       </View>

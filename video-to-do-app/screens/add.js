@@ -49,11 +49,11 @@ export default class AddScreen extends Component {
     return(
       <View style = { styles.container }>
         <Form
-          ref = "form"
+          ref = 'form'
           type = { Idea }
         />
-        <Button title = "Add" onPress = { this.handleSubmit }
-        color = "tomato"/>
+        <Button title = 'Add' onPress = { this.handleSubmit }
+        color = 'tomato'/>
       </View>
     );
   }

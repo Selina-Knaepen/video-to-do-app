@@ -37,7 +37,7 @@ export default class IdeasScreen extends Component {
     <View
       style = {{
         height: 1,
-        width: "100%",
+        width: '100%',
       }}
     />
   );
@@ -70,8 +70,8 @@ export default class IdeasScreen extends Component {
       />
 
       <FAB
-        buttonColor = "tomato"
-        iconTextColor = "#FFFFFF"
+        buttonColor = 'tomato'
+        iconTextColor = '#FFFFFF'
         onClickAction = {() => {
           this.props.navigation.navigate('Edit', {screen: 'AddIdea'})
         }}

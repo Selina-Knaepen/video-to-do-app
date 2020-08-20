@@ -44,11 +44,11 @@ function App() {
         screenOptions = {{ headerShown: false }}
       >
       <Stack.Screen
-        name = "Tabs"
+        name = 'Tabs'
         component = { Tabs }
       />
       <Stack.Screen
-        name = "Edit"
+        name = 'Edit'
         component = { Edit }
       />
       </Stack.Navigator>
@@ -69,19 +69,19 @@ function Tabs() {
     }}
     >
       <Tab.Screen
-        name = "Doing"
+        name = 'Doing'
         component = { DoingScreen }
       />
       <Tab.Screen
-        name = "Ideas"
+        name = 'Ideas'
         component = { IdeasScreen }
       />
       <Tab.Screen
-        name = "Stats"
+        name = 'Stats'
         component = { StatsScreen }
       />
       <Tab.Screen
-        name = "Done"
+        name = 'Done'
         component = { DoneScreen }
       />
     </Tab.Navigator>
@@ -92,17 +92,17 @@ function Edit() {
   return(
     <Stack.Navigator>
       <Stack.Screen
-        name = "AddIdea"
-        options = {{ title: "Add Idea" }}
+        name = 'AddIdea'
+        options = {{ title: 'Add Idea' }}
         component = { AddScreen }
       />
       <Stack.Screen
-        name = "Details"
+        name = 'Details'
         component = { DetailsScreen }
       />
       <Stack.Screen
-        name = "EditVideo"
-        options = {{ title: "Edit" }}
+        name = 'EditVideo'
+        options = {{ title: 'Edit' }}
         component = { EditScreen }
       />
     </Stack.Navigator>

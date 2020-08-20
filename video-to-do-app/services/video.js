@@ -67,4 +67,14 @@ export default class VideoService {
       }
     });
   }
-}
+
+  deleteIdea(id) {
+    return fetch(seeHome + 'ideas/' + id, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+}  

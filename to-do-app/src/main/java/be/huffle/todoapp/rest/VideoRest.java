@@ -47,4 +47,9 @@ public class VideoRest {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 	}
+
+	@DeleteMapping("ideas/{id}")
+	public void deleteIdea(@PathVariable("id") long id) {
+		videoService.deleteIdea(id);
+	}
 }

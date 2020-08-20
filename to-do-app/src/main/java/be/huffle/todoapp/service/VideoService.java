@@ -58,6 +58,10 @@ public class VideoService {
 
 	}
 
+	public void deleteIdea(long id) {
+		videoDao.deleteById(id);
+	}
+
 	private VideoResource mapVideoToVideoResource(Video video) {
 		VideoResource videoResource = new VideoResource();
 		videoResource.setId(video.getId());
