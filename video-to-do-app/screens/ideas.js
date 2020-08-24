@@ -27,7 +27,7 @@ export default class IdeasScreen extends Component {
       this.setState({
         ideas: ideas,
         refreshing: false
-      })
+      });
     });
   }
 

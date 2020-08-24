@@ -27,6 +27,11 @@ public class VideoRest {
 	@GetMapping("done")
 	public List<VideoResource> getDone() { return videoService.getDoneVideos(); }
 
+	@GetMapping("doing")
+	public List<VideoResource> getDoing() {
+		return videoService.getDoingVideos();
+	}
+
 	@PostMapping("ideas")
 	public ResponseEntity<VideoResource> createIdea(@RequestBody VideoCreateResoure videoCreateResoure) {
 		try {

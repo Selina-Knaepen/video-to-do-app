@@ -33,6 +33,13 @@ public class VideoService {
 				.collect(Collectors.toList());
 	}
 
+	public List<VideoResource> getDoingVideos() {
+		return videoDao.findVideoByVideoState(VideoState.DOING)
+				.stream()
+				.map(this::mapVideoToVideoResource)
+				.collect(Collectors.toList());
+	}
+
 	public VideoResource createIdea(VideoCreateResoure videoCreateResoure) throws InvalidVideoException {
 		if (videoCreateResoure.getTotalFrames() <= 0) {
 			throw new InvalidVideoException("The video needs to have more than 0 frames");
@@ -48,12 +55,12 @@ public class VideoService {
 
 	public VideoResource moveIdeaToDoing(long id) throws InvalidActionException {
 		List<Video> doingVideos = videoDao.findVideoByVideoState(VideoState.DOING);
-		if (doingVideos.isEmpty()) {
+		if (doingVideos.size() < 2) {
 			Video video = videoDao.findById(id).orElse(null);
 			video.setVideoState(VideoState.DOING);
 			return mapVideoToVideoResource(videoDao.save(video));
 		} else {
-			throw new InvalidActionException("There is already a video being made");
+			throw new InvalidActionException("There is already two videos being made");
 		}
 
 	}

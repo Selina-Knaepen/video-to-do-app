@@ -24,6 +24,17 @@ export default class VideoService {
       });
   }
 
+  getDoing() {
+    return fetch(seeHome + 'doing')
+      .then((response) => response.json())
+      .then((json) => {
+        return json;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   createIdea(title, totalFrames) {
     return fetch(seeHome + 'ideas', {
       method: 'POST',
@@ -77,4 +88,4 @@ export default class VideoService {
       }
     })
   }
-}  
+}
