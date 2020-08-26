@@ -3,7 +3,7 @@ const huffleHome = 'http://192.168.1.200:8080/video/';
 
 export default class VideoService {
   getIdeas() {
-    return fetch(seeHome + 'ideas')
+    return fetch(huffleHome + 'ideas')
       .then((response) => response.json())
       .then((json) => {
         return json;
@@ -14,7 +14,7 @@ export default class VideoService {
   }
 
   getDone() {
-    return fetch(seeHome + 'done')
+    return fetch(huffleHome + 'done')
       .then((response) => response.json())
       .then((json) => {
         return json;
@@ -25,7 +25,7 @@ export default class VideoService {
   }
 
   getDoing() {
-    return fetch(seeHome + 'doing')
+    return fetch(huffleHome + 'doing')
       .then((response) => response.json())
       .then((json) => {
         return json;
@@ -36,7 +36,7 @@ export default class VideoService {
   }
 
   createIdea(title, totalFrames) {
-    return fetch(seeHome + 'ideas', {
+    return fetch(huffleHome + 'ideas', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -60,7 +60,7 @@ export default class VideoService {
   }
 
   moveIdeaToDoing(id) {
-    return fetch(seeHome + 'ideaToDoing/' + id, {
+    return fetch(huffleHome + 'ideaToDoing/' + id, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -80,7 +80,7 @@ export default class VideoService {
   }
 
   deleteIdea(id) {
-    return fetch(seeHome + 'ideas/' + id, {
+    return fetch(huffleHome + 'ideas/' + id, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
