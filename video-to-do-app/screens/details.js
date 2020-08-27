@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
 });
 
 export default class DetailsScreen extends Component {
-  item = this.props.route.params.item
+  item = this.props.route.params.item;
+  prevScreen = this.props.route.params.prev;
   videoService = new VideoService();
 
   handleSubmit = () => {
@@ -85,20 +86,10 @@ export default class DetailsScreen extends Component {
     );
   }
 
-  render() {
-    return(
-      <View style = { styles.container }>
-        <Text style = { styles.label }>Title:</Text>
-        <Text>{ this.item.title }</Text>
-
-        <View style = {{ marginTop: 20 }}/>
-        <Text style = { styles.label }>Total Frames:</Text>
-        <Text>{ this.item.totalFrames }</Text>
-
-        <View style = {{ marginTop: 20 }}/>
-        <Text style = { styles.label }>Current Frame:</Text>
-        <Text>{ this.item.currentFrame }</Text>
-
+  displayButtons() {
+    if (this.prevScreen == 'ideas') {
+      return (
+        <View>
         <View style = { styles.viewContainer }>
           <View style = { styles.buttonContainer }>
             <Button
@@ -124,6 +115,26 @@ export default class DetailsScreen extends Component {
             color = 'red'
           />
         </View>
+        </View>
+      )
+    }
+  }
+
+  render() {
+    return(
+      <View style = { styles.container }>
+        <Text style = { styles.label }>Title:</Text>
+        <Text>{ this.item.title }</Text>
+
+        <View style = {{ marginTop: 20 }}/>
+        <Text style = { styles.label }>Total Frames:</Text>
+        <Text>{ this.item.totalFrames }</Text>
+
+        <View style = {{ marginTop: 20 }}/>
+        <Text style = { styles.label }>Current Frame:</Text>
+        <Text>{ this.item.currentFrame }</Text>
+
+        { this.displayButtons() }
 
       </View>
     );

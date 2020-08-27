@@ -56,9 +56,10 @@ export default class IdeasScreen extends Component {
     this.props.navigation.navigate('Edit', {
       screen: 'Details',
       params: {
-        item: item
+        item: item,
+        prev: 'ideas'
       }
-    })
+    });
   }
 
   handleRefresh = () => {
