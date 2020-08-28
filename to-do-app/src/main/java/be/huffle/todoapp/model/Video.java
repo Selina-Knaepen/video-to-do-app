@@ -53,8 +53,4 @@ public class Video {
 	public void setVideoState(VideoState videoState) {
 		this.videoState = videoState;
 	}
-
-	public int calculateProgressPercentage() {
-		return (currentFrame / totalFrames) * 100;
-	}
 }

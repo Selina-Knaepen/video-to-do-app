@@ -49,6 +49,11 @@ export default class DoingScreen extends Component {
     this.options = ['Pick an item', '[No Item]', '[No Item]']
   }
 
+  getProgress() {
+    const item = this.state.selectedItem;
+    return item.currentFrame / item.totalFrames;
+  }
+
   getData() {
     this.videoService.getDoing().then((doing) => {
       this.setState({
@@ -120,13 +125,13 @@ export default class DoingScreen extends Component {
             { this.state.selectedItem.title }
           </Text>
           <Progress.Circle
-            showsText = {true}
-            size = {175}
+            showsText = { true }
+            size = { 175 }
             borderColor = 'red'
             color = '#ff6347'
-            progress = {0.30}
+            progress = { this.getProgress() }
             formatText={() => {
-                  return `30%`
+                  return `${ Math.round(this.getProgress() * 100) }%`
                 }}
           />
 
