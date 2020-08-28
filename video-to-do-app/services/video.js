@@ -79,6 +79,31 @@ export default class VideoService {
     });
   }
 
+  editVideo(id, title, totalFrames, currentFrame) {
+    return fetch(huffleHome + 'edit/' + id, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: title,
+        totalFrames: totalFrames,
+        currentFrame: currentFrame
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json()
+        .then(error => {
+          throw new Error(error.message);
+        })
+      }
+    });
+  }
+
   deleteIdea(id) {
     return fetch(huffleHome + 'ideas/' + id, {
       method: 'DELETE',

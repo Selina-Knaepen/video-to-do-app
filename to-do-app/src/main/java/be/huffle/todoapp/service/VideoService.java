@@ -10,7 +10,6 @@ import be.huffle.todoapp.resources.VideoResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +61,20 @@ public class VideoService {
 		} else {
 			throw new InvalidActionException("There is already two videos being made");
 		}
+	}
 
+	public VideoResource editVideo(long id, VideoCreateResoure videoCreateResoure) {
+		Video video = videoDao.findById(id).orElse(null);
+		if (video == null) {
+			video = new Video();
+			video.setVideoState(VideoState.IDEA);
+		}
+
+		video.setCurrentFrame(videoCreateResoure.getCurrentFrame());
+		video.setTotalFrames(videoCreateResoure.getTotalFrames());
+		video.setTitle(videoCreateResoure.getTitle());
+
+		return mapVideoToVideoResource(videoDao.save(video));
 	}
 
 	public void deleteIdea(long id) {

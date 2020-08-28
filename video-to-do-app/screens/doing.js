@@ -53,8 +53,9 @@ export default class DoingScreen extends Component {
     this.videoService.getDoing().then((doing) => {
       this.setState({
         doing: doing,
-        refreshing: false
+        refreshing: false,
       });
+      this.loadScreenValues(this.state.value);
     });
   }
 
@@ -93,17 +94,18 @@ export default class DoingScreen extends Component {
 
   loadScreenValues(i) {
     this.setState({ value: i });
-    if (i == 0) {
-      this.setState({
-        selectedItem: ''
-      });
-    } else if (i == 1) {
+
+    if (i == 1 && this.options[1] != '[No Item]') {
       this.setState({
         selectedItem: this.state.doing[0]
       });
-    } else if (i == 2) {
+    } else if (i == 2 && this.options[2] != '[No Item]') {
       this.setState({
         selectedItem: this.state.doing[1]
+      });
+    } else {
+      this.setState({
+        selectedItem: ''
       });
     }
   }
@@ -140,6 +142,7 @@ export default class DoingScreen extends Component {
             <View style = { styles.buttonContainer }>
               <Button
                 title = 'Update'
+                onPress = { this.goEdit }
                 color = 'orangered'
               />
             </View>
@@ -155,6 +158,16 @@ export default class DoingScreen extends Component {
         </View>
       )
     }
+  }
+
+  goEdit = () => {
+    this.props.navigation.navigate('Edit', {
+      screen: 'EditVideo',
+      params: {
+        item: this.state.selectedItem,
+        prev: 'doing',
+      }
+    });
   }
 
   createAlert = () => {

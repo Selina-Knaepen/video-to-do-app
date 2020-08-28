@@ -53,6 +53,13 @@ public class VideoRest {
 		}
 	}
 
+	@PutMapping("edit/{id}")
+	public ResponseEntity<VideoResource> editVideo(@PathVariable("id") long id,
+												   @RequestBody VideoCreateResoure videoCreateResoure) {
+		VideoResource videoResource = videoService.editVideo(id, videoCreateResoure);
+		return new ResponseEntity<VideoResource>(videoResource, HttpStatus.OK);
+	}
+
 	@DeleteMapping("ideas/{id}")
 	public void deleteIdea(@PathVariable("id") long id) {
 		videoService.deleteIdea(id);
