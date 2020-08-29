@@ -153,7 +153,15 @@ export default class DoingScreen extends Component {
             </View>
           </View>
 
-          <View style = {{ padding: 10 }}>
+          <View style = {{ padding: 5 }}>
+            <Button
+              title = 'Finish'
+              onPress = { this.moveToDone }
+              color = 'red'
+            />
+          </View>
+
+          <View style = {{ padding: 5 }}>
             <Button
               title = 'Remove'
               onPress = { this.createAlert }
@@ -173,6 +181,19 @@ export default class DoingScreen extends Component {
         prev: 'doing',
       }
     });
+  }
+
+  moveToDone = () => {
+    this.videoService.moveDoingToDone(this.state.selectedItem.id)
+      .then(() => {
+        ToastAndroid.show('The video has been successfully moved to done',
+        ToastAndroid.LONG);
+        this.getData();
+        this.setState({ value: 0 });
+      })
+      .catch((error) => {
+        ToastAndroid.show(error.message, ToastAndroid.LONG);
+      });
   }
 
   createAlert = () => {

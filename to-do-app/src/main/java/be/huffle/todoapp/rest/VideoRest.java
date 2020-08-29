@@ -53,6 +53,16 @@ public class VideoRest {
 		}
 	}
 
+	@PutMapping("doingToDone/{id}")
+	public ResponseEntity<VideoResource> moveDoingToDone(@PathVariable("id") long id) {
+		try {
+			VideoResource videoResource = videoService.moveDoingToDone(id);
+			return new ResponseEntity<VideoResource>(videoResource, HttpStatus.OK);
+		} catch (InvalidActionException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
 	@PutMapping("edit/{id}")
 	public ResponseEntity<VideoResource> editVideo(@PathVariable("id") long id,
 												   @RequestBody VideoCreateResoure videoCreateResoure) {

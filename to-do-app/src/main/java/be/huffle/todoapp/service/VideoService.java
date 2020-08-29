@@ -63,6 +63,16 @@ public class VideoService {
 		}
 	}
 
+	public VideoResource moveDoingToDone(long id) throws InvalidActionException {
+		Video video = videoDao.findById(id).orElse(null);
+		if (video != null && video.getCurrentFrame() != video.getTotalFrames()) {
+			throw new InvalidActionException("Can't finish video when video isn't done 100%");
+		}
+
+		video.setVideoState(VideoState.DONE);
+		return mapVideoToVideoResource(videoDao.save(video));
+	}
+
 	public VideoResource editVideo(long id, VideoCreateResoure videoCreateResoure) throws InvalidVideoException {
 		if (videoCreateResoure.getTotalFrames() < videoCreateResoure.getCurrentFrame()) {
 			throw new InvalidVideoException("The current frame cannot be higher than the total amount of frames");
