@@ -54,7 +54,7 @@ export default class VideoService {
         return response.json()
         .then(error => {
           throw new Error(error.message);
-        })
+        });
       }
     });
   }
@@ -74,7 +74,7 @@ export default class VideoService {
         return response.json()
         .then(error => {
           throw new Error(error.message);
-        })
+        });
       }
     });
   }
@@ -99,7 +99,7 @@ export default class VideoService {
         return response.json()
         .then(error => {
           throw new Error(error.message);
-        })
+        });
       }
     });
   }
