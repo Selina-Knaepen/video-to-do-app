@@ -47,6 +47,7 @@ public class VideoService {
 		Video video = new Video();
 		video.setTitle(videoCreateResoure.getTitle());
 		video.setTotalFrames(videoCreateResoure.getTotalFrames());
+		video.setDescription(videoCreateResoure.getDescription());
 		video.setCurrentFrame(0);
 		video.setVideoState(VideoState.IDEA);
 		return mapVideoToVideoResource(videoDao.save(video));
@@ -87,6 +88,7 @@ public class VideoService {
 		video.setCurrentFrame(videoCreateResoure.getCurrentFrame());
 		video.setTotalFrames(videoCreateResoure.getTotalFrames());
 		video.setTitle(videoCreateResoure.getTitle());
+		video.setDescription(videoCreateResoure.getDescription());
 
 		return mapVideoToVideoResource(videoDao.save(video));
 	}
@@ -102,6 +104,7 @@ public class VideoService {
 		videoResource.setTotalFrames(video.getTotalFrames());
 		videoResource.setCurrentFrame(video.getCurrentFrame());
 		videoResource.setState(video.getVideoState().name());
+		videoResource.setDescription(video.getDescription());
 		return videoResource;
 	}
 }

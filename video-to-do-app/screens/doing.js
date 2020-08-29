@@ -231,7 +231,7 @@ export default class DoingScreen extends Component {
         item: this.state.selectedItem,
         prev: 'doing'
       }
-    })
+    });
   }
 
   render() {

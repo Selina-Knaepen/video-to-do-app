@@ -4,6 +4,7 @@ public class VideoCreateResoure {
 	private String title;
 	private int totalFrames;
 	private int currentFrame;
+	private String description;
 
 	public String getTitle() {
 		return title;
@@ -27,5 +28,13 @@ public class VideoCreateResoure {
 
 	public void setCurrentFrame(int currentFrame) {
 		this.currentFrame = currentFrame;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

@@ -6,6 +6,7 @@ public class VideoResource {
 	private int totalFrames;
 	private int currentFrame;
 	private String state;
+	private String description;
 
 	public Long getId() {
 		return id;
@@ -45,5 +46,13 @@ public class VideoResource {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

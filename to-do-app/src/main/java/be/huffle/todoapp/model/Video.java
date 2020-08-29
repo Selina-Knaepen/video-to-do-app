@@ -11,6 +11,7 @@ public class Video {
 	private String title;
 	private int totalFrames;
 	private int currentFrame;
+	private String description;
 	@Enumerated(EnumType.STRING)
 	private VideoState videoState;
 
@@ -52,5 +53,13 @@ public class Video {
 
 	public void setVideoState(VideoState videoState) {
 		this.videoState = videoState;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
