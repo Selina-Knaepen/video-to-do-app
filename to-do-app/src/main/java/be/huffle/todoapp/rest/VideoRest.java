@@ -56,8 +56,12 @@ public class VideoRest {
 	@PutMapping("edit/{id}")
 	public ResponseEntity<VideoResource> editVideo(@PathVariable("id") long id,
 												   @RequestBody VideoCreateResoure videoCreateResoure) {
-		VideoResource videoResource = videoService.editVideo(id, videoCreateResoure);
-		return new ResponseEntity<VideoResource>(videoResource, HttpStatus.OK);
+		try {
+			VideoResource videoResource = videoService.editVideo(id, videoCreateResoure);
+			return new ResponseEntity<VideoResource>(videoResource, HttpStatus.OK);
+		} catch (InvalidVideoException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
 	}
 
 	@DeleteMapping("ideas/{id}")

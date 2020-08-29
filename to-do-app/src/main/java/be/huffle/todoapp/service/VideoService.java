@@ -63,7 +63,11 @@ public class VideoService {
 		}
 	}
 
-	public VideoResource editVideo(long id, VideoCreateResoure videoCreateResoure) {
+	public VideoResource editVideo(long id, VideoCreateResoure videoCreateResoure) throws InvalidVideoException {
+		if (videoCreateResoure.getTotalFrames() < videoCreateResoure.getCurrentFrame()) {
+			throw new InvalidVideoException("The current frame cannot be higher than the total amount of frames");
+		}
+
 		Video video = videoDao.findById(id).orElse(null);
 		if (video == null) {
 			video = new Video();
