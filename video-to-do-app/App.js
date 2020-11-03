@@ -77,10 +77,6 @@ function Tabs() {
         component = { IdeasScreen }
       />
       <Tab.Screen
-        name = 'Stats'
-        component = { StatsScreen }
-      />
-      <Tab.Screen
         name = 'Done'
         component = { DoneScreen }
       />
