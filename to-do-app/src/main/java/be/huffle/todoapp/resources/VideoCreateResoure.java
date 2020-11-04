@@ -6,6 +6,7 @@ public class VideoCreateResoure {
 	private int currentFrame;
 	private String description;
 	private boolean hasScript;
+	private String labelTagName;
 
 	public String getTitle() {
 		return title;
@@ -45,5 +46,13 @@ public class VideoCreateResoure {
 
 	public void setScript(boolean hasScript) {
 		this.hasScript = hasScript;
+	}
+
+	public String getLabelTagName() {
+		return labelTagName;
+	}
+
+	public void setLabelTagName(String labelTagName) {
+		this.labelTagName = labelTagName;
 	}
 }

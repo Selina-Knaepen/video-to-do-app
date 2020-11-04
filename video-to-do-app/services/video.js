@@ -1,9 +1,34 @@
-const seeHome = 'http://192.168.0.105:8080/video/';
-const huffleHome = 'http://192.168.1.200:8080/video/';
+const seeHomeVideo = 'http://192.168.0.105:8080/video/';
+const huffleHomeVideo = 'http://192.168.1.2:8080/video/';
+
+const seeHomeLabel = 'http://192.168.0.105:8080/labelTag/';
+const huffleHomeLabel = 'http://192.168.1.2:8080/labelTag/';
 
 export default class VideoService {
+  getAllLabels() {
+    return fetch(huffleHomeLabel + 'all')
+      .then((response) => response.json())
+      .then((json) => {
+        return json;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getByLabelId(id) {
+    return fetch(huffleHomeVideo + '?id=' + id)
+      .then((response) => response.json())
+      .then((json) => {
+        return json;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   getIdeas() {
-    return fetch(huffleHome + 'ideas')
+    return fetch(huffleHomeVideo + 'ideas')
       .then((response) => response.json())
       .then((json) => {
         return json;
@@ -14,7 +39,7 @@ export default class VideoService {
   }
 
   getDone() {
-    return fetch(huffleHome + 'done')
+    return fetch(huffleHomeVideo + 'done')
       .then((response) => response.json())
       .then((json) => {
         return json;
@@ -25,7 +50,7 @@ export default class VideoService {
   }
 
   getDoing() {
-    return fetch(huffleHome + 'doing')
+    return fetch(huffleHomeVideo + 'doing')
       .then((response) => response.json())
       .then((json) => {
         return json;
@@ -35,8 +60,8 @@ export default class VideoService {
       });
   }
 
-  createIdea(title, totalFrames, description, hasScript) {
-    return fetch(huffleHome + 'ideas', {
+  createIdea(title, totalFrames, description, hasScript, labelName) {
+    return fetch(huffleHomeVideo + 'ideas', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -46,7 +71,8 @@ export default class VideoService {
         title: title,
         totalFrames: totalFrames,
         description: description,
-        script: hasScript
+        script: hasScript,
+        labelTagName: labelName
       })
     })
     .then(response => {
@@ -62,7 +88,7 @@ export default class VideoService {
   }
 
   moveIdeaToDoing(id) {
-    return fetch(huffleHome + 'ideaToDoing/' + id, {
+    return fetch(huffleHomeVideo + 'ideaToDoing/' + id, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -82,7 +108,7 @@ export default class VideoService {
   }
 
   moveDoingToDone(id) {
-    return fetch(huffleHome + 'doingToDone/' + id, {
+    return fetch(huffleHomeVideo + 'doingToDone/' + id, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -101,8 +127,8 @@ export default class VideoService {
     });
   }
 
-  editVideo(id, title, totalFrames, currentFrame, description, hasScript) {
-    return fetch(huffleHome + 'edit/' + id, {
+  editVideo(id, title, totalFrames, currentFrame, description, hasScript, labelTagName) {
+    return fetch(huffleHomeVideo + 'edit/' + id, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -113,7 +139,8 @@ export default class VideoService {
         totalFrames: totalFrames,
         currentFrame: currentFrame,
         description: description,
-        script: hasScript
+        script: hasScript,
+        labelTagName: labelTagName
       })
     })
     .then(response => {
@@ -129,7 +156,7 @@ export default class VideoService {
   }
 
   deleteIdea(id) {
-    return fetch(huffleHome + 'ideas/' + id, {
+    return fetch(huffleHomeVideo + 'ideas/' + id, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',

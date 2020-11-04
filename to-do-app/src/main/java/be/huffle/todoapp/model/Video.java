@@ -15,6 +15,8 @@ public class Video {
 	@Enumerated(EnumType.STRING)
 	private VideoState videoState;
 	private boolean hasScript;
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	private LabelTag labelTag;
 
 	public Long getId() {
 		return id;
@@ -70,5 +72,13 @@ public class Video {
 
 	public void setScript(boolean hasScript) {
 		this.hasScript = hasScript;
+	}
+
+	public LabelTag getLabelTag() {
+		return labelTag;
+	}
+
+	public void setLabelTag(LabelTag labelTag) {
+		this.labelTag = labelTag;
 	}
 }

@@ -21,7 +21,8 @@ public class VideoRest {
 
 	@GetMapping("ideas")
 	public List<VideoResource> getIdeas() {
-		return videoService.getIdeaVideos();
+		List<VideoResource> videos = videoService.getIdeaVideos();
+		return videos;
 	}
 
 	@GetMapping("done")
@@ -30,6 +31,11 @@ public class VideoRest {
 	@GetMapping("doing")
 	public List<VideoResource> getDoing() {
 		return videoService.getDoingVideos();
+	}
+
+	@GetMapping("")
+	public List<VideoResource> getIdeasByLabelTagId(@RequestParam long id) {
+		return videoService.getIdeasByLabelTagId(id);
 	}
 
 	@PostMapping("ideas")

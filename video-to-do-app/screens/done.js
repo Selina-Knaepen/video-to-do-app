@@ -11,15 +11,26 @@ export default class DoneScreen extends Component {
   constructor() {
     super();
     this.state = {
-      done: []
+      done: [],
+      seed: 1,
+      refreshing: false
     };
     this.videoService = new VideoService();
   }
 
-  componentDidMount() {
+  getData() {
     this.videoService.getDone().then((done) => {
-      this.setState({done: done})
-    })
+      this.setState({
+        done: done,
+        refreshing: false
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.getData();
+    });
   }
 
   FlatListItemSeparator = () => {
@@ -39,7 +50,17 @@ export default class DoneScreen extends Component {
       params: {
         item: item
       }
-    })
+    });
+  }
+
+  handleRefresh = () => {
+    this.setState({
+      refreshing: true,
+      seed: this.state.seed + 1
+    },
+    () => {
+      this.getData();
+    });
   }
 
   render() {
@@ -51,11 +72,31 @@ export default class DoneScreen extends Component {
           <TouchableHighlight
             keyExtractor = { (item) => item.id }
             onPress = { () => this._onPress(item) }>
-            <View style = {{ backgroundColor: 'white' }}>
-              <Text style = {{ margin: 15 }}>{ item.title }</Text>
+            <View style = {{
+              backgroundColor: 'white',
+              flexDirection: 'row-reverse',
+              flex: 1,
+            }}>
+              <Text
+                style = {{
+                  margin: 15,
+                  backgroundColor: item.script ? 'lightgreen' : 'darksalmon',
+                  padding: 5,
+                  borderRadius: 12
+                }}
+              >
+                {item.script ? 'has script' : 'no script'}
+              </Text>
+              <Text
+                style = {{ margin: 15, alignSelf: 'flex-end', flex: 1 }}
+              >
+                { item.title }
+              </Text>
             </View>
           </TouchableHighlight>
         )}
+        refreshing = { this.state.refreshing }
+        onRefresh = { this.handleRefresh }
       />
     );
   }

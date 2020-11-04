@@ -1,5 +1,6 @@
 package be.huffle.todoapp.dao;
 
+import be.huffle.todoapp.model.LabelTag;
 import be.huffle.todoapp.model.Video;
 import be.huffle.todoapp.model.VideoState;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import java.util.List;
 @Repository
 public interface VideoDao extends JpaRepository<Video, Long> {
 	List<Video> findVideoByVideoState(VideoState videoState);
+	List<Video> findVideoByLabelTagIdAndVideoState(long id, VideoState videoState);
 }

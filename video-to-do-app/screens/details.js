@@ -135,7 +135,6 @@ export default class DetailsScreen extends Component {
           size = 'small'
           disabled = { true }
         />
-
         <View />
         <Text style = { styles.label }>Total Frames:</Text>
         <Text>{ this.item.totalFrames }</Text>
@@ -144,6 +143,10 @@ export default class DetailsScreen extends Component {
         <Text style = { styles.label }>Current Frame:</Text>
         <Text>{ this.item.currentFrame }</Text>
 
+        <View style = {{ marginTop: 20 }}/>
+        <Text style = { styles.label }>Label:</Text>
+        <Text>{ this.item.labelTagName }</Text>
+        
         <View style = {{ marginTop: 20 }}/>
         <Text style = { styles.label }>Description:</Text>
         <Text>{ this.item.description }</Text>

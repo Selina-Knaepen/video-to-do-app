@@ -37,9 +37,10 @@ export default class EditScreen extends Component {
         title: this.item.title,
         totalFrames: this.item.totalFrames,
         currentFrame: this.item.currentFrame,
-        description: this.item.description
+        description: this.item.description,
       },
-      hasScript: this.item.script
+      hasScript: this.item.script,
+      labelTagName: this.item.labelTagName
   };
   videoService = new VideoService();
   options = {
@@ -56,7 +57,9 @@ export default class EditScreen extends Component {
     if (value) {
       this.videoService.editVideo(this.item.id,
         value.title, value.totalFrames,
-        value.currentFrame, value.description, this.state.hasScript)
+        value.currentFrame, value.description, this.state.hasScript,
+        this.state.labelTagName
+      )
         .then(() => {
           if (this.prevScreen == 'doing') {
             this.props.navigation.navigate('Tabs', {

@@ -1,8 +1,10 @@
 package be.huffle.todoapp.service;
 
+import be.huffle.todoapp.dao.LabelTagDao;
 import be.huffle.todoapp.dao.VideoDao;
 import be.huffle.todoapp.exceptions.InvalidActionException;
 import be.huffle.todoapp.exceptions.InvalidVideoException;
+import be.huffle.todoapp.model.LabelTag;
 import be.huffle.todoapp.model.Video;
 import be.huffle.todoapp.model.VideoState;
 import be.huffle.todoapp.resources.VideoCreateResoure;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 public class VideoService {
 	@Autowired
 	private VideoDao videoDao;
+	@Autowired
+	private LabelTagService labelTagService;
 
 	public List<VideoResource> getIdeaVideos() {
 		return videoDao.findVideoByVideoState(VideoState.IDEA)
@@ -39,10 +43,19 @@ public class VideoService {
 				.collect(Collectors.toList());
 	}
 
+	public List<VideoResource> getIdeasByLabelTagId(long id) {
+		return videoDao.findVideoByLabelTagIdAndVideoState(id, VideoState.IDEA)
+				.stream()
+				.map(this::mapVideoToVideoResource)
+				.collect(Collectors.toList());
+	}
+
 	public VideoResource createIdea(VideoCreateResoure videoCreateResoure) throws InvalidVideoException {
 		if (videoCreateResoure.getTotalFrames() < 0) {
 			throw new InvalidVideoException("The video needs to have more than 0 frames");
 		}
+
+		LabelTag labelTag = labelTagService.getLabelTagByName(videoCreateResoure.getLabelTagName());
 
 		Video video = new Video();
 		video.setTitle(videoCreateResoure.getTitle());
@@ -51,6 +64,7 @@ public class VideoService {
 		video.setCurrentFrame(0);
 		video.setVideoState(VideoState.IDEA);
 		video.setScript(videoCreateResoure.getScript());
+		video.setLabelTag(labelTag);
 		return mapVideoToVideoResource(videoDao.save(video));
 	}
 
@@ -91,11 +105,14 @@ public class VideoService {
 			video.setVideoState(VideoState.IDEA);
 		}
 
+		LabelTag labelTag = labelTagService.getLabelTagByName(videoCreateResoure.getLabelTagName());
+
 		video.setCurrentFrame(videoCreateResoure.getCurrentFrame());
 		video.setTotalFrames(videoCreateResoure.getTotalFrames());
 		video.setTitle(videoCreateResoure.getTitle());
 		video.setDescription(videoCreateResoure.getDescription());
 		video.setScript(videoCreateResoure.getScript());
+		video.setLabelTag(labelTag);
 
 		return mapVideoToVideoResource(videoDao.save(video));
 	}
@@ -113,6 +130,10 @@ public class VideoService {
 		videoResource.setState(video.getVideoState().name());
 		videoResource.setDescription(video.getDescription());
 		videoResource.setScript(video.getScript());
+		LabelTag labelTag = video.getLabelTag();
+		if (labelTag != null) {
+			videoResource.setLabelTagName(labelTag.getName());
+		}
 		return videoResource;
 	}
 }

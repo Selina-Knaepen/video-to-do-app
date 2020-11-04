@@ -6,9 +6,11 @@ import {
   Button,
   StyleSheet,
   ToastAndroid,
-  Switch
+  Picker,
+  TextInput,
 } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import t from 'tcomb-form-native';
 import _ from 'lodash';
@@ -19,11 +21,11 @@ const stylesheet = _.cloneDeep(Form.stylesheet);
 
 stylesheet.textbox.normal.height = 300;
 stylesheet.textbox.normal.textAlignVertical = 'top';
-stylesheet.checkbox.normal.onTintColor = {false: "#767577", true: "#81b0ff"}
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    flex: 1,
     padding: 20
   },
 });
@@ -47,8 +49,13 @@ export default class AddScreen extends Component {
         title: '',
         totalFrames: '',
         description: ''
-      }
-    }
+      },
+      labelValue: 0,
+      selectedLabel: '',
+      allLabels: []
+    };
+
+    this.labelNames = [];
 
     this.options = {
       fields: {
@@ -61,14 +68,23 @@ export default class AddScreen extends Component {
         optional: '',
         required: ''
       }
-    }
+    };
+
+  }
+
+  componentDidMount() {
+    this.videoService.getAllLabels().then((givenLabels) => {
+      this.setState({ allLabels: givenLabels })
+    });
   }
 
   handleSubmit = () => {
     const value = this.refs.form.getValue();
     if (value) {
         this.videoService.createIdea(value.title,
-           value.totalFrames, value.description, this.state.hasScript)
+           value.totalFrames, value.description, this.state.hasScript,
+           this.state.selectedLabel
+         )
         .then(() => {
           this.props.navigation.navigate('Tabs', {
             screen: 'Ideas'
@@ -96,8 +112,66 @@ export default class AddScreen extends Component {
     });
   }
 
+  loadPickerValues() {
+    this.labelNames = ['[Make new label]'];
+    const allLabelsArray = this.state.allLabels;
+    for (let i = 0; i < allLabelsArray.length; i++) {
+      this.labelNames.push(allLabelsArray[i].name);
+    }
+  }
+
+  onPickerChanged(i) {
+    const value = this.refs.form.getValue();
+    if (value) {
+      this.setState({
+        value: {
+          title: value.title,
+          totalFrames: value.totalFrames,
+          description: value.description
+        }
+      });
+    }
+    
+    this.setState({ labelValue: i });
+    this.setState({ selectedLabel: this.labelNames[i] });
+  }
+
+  showInput() {
+    if (this.state.labelValue == 0) {
+      return(
+        <TextInput
+          style={{
+            height: 40,
+            borderColor: 'lightgray',
+            borderWidth: 1,
+            borderRadius: 5,
+            marginBottom: 10
+          }}
+          value = { this.state.selectedLabel }
+          onChangeText = { (text) => this.onInputChanged(text) }
+        />
+      );
+    }
+  }
+
+  onInputChanged(textValue) {
+    const value = this.refs.form.getValue();
+    if (value) {
+      this.setState({
+        value: {
+          title: value.title,
+          totalFrames: value.totalFrames,
+          description: value.description
+        }
+      });
+    }
+
+    this.setState({selectedLabel: textValue})
+  }
+
   render() {
     return(
+      <KeyboardAwareScrollView>
       <View style = { styles.container }>
         <Form
           ref = 'form'
@@ -105,16 +179,38 @@ export default class AddScreen extends Component {
           value = { this.state.value }
           options = { this.options }
         />
+
         <ToggleSwitch
-          label = "Has Script?"
+          label = 'Has Script?'
           isOn = { this.state.hasScript }
           onToggle = { isOn => this.changeValue(isOn) }
-          onColor = "tomato"
+          onColor = 'tomato'
           labelStyle = {{ margin: 15 }}
         />
+
+        <Text>Label</Text>
+        { this.loadPickerValues() }
+        <Picker
+          key = 'labels'
+          mode = 'dropdown'
+          selectedValue = { this.state.labelValue }
+          style = {{ height: 50, width: 250 }}
+          onValueChange = { (itemValue) => {
+              this.onPickerChanged(itemValue)
+          }}
+        >
+          {
+            this.labelNames.map((item, index) => {
+              return (<Picker.Item label = { item } key = { index } value = { index }/>)
+            })
+          }
+        </Picker>
+        { this.showInput() }
+
         <Button title = 'Add' onPress = { this.handleSubmit }
         color = 'tomato'/>
       </View>
+      </KeyboardAwareScrollView>
     );
   }
 }

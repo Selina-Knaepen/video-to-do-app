@@ -8,6 +8,7 @@ public class VideoResource {
 	private String state;
 	private String description;
 	private boolean hasScript;
+	private String labelTagName;
 
 	public Long getId() {
 		return id;
@@ -63,5 +64,13 @@ public class VideoResource {
 
 	public void setScript(boolean hasScript) {
 		this.hasScript = hasScript;
+	}
+
+	public String getLabelTagName() {
+		return labelTagName;
+	}
+
+	public void setLabelTagName(String labelTagName) {
+		this.labelTagName = labelTagName;
 	}
 }
