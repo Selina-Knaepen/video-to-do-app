@@ -35,7 +35,7 @@ export default class VideoService {
       });
   }
 
-  createIdea(title, totalFrames, description) {
+  createIdea(title, totalFrames, description, hasScript) {
     return fetch(huffleHome + 'ideas', {
       method: 'POST',
       headers: {
@@ -45,7 +45,8 @@ export default class VideoService {
       body: JSON.stringify({
         title: title,
         totalFrames: totalFrames,
-        description: description
+        description: description,
+        script: hasScript
       })
     })
     .then(response => {
@@ -100,7 +101,7 @@ export default class VideoService {
     });
   }
 
-  editVideo(id, title, totalFrames, currentFrame, description) {
+  editVideo(id, title, totalFrames, currentFrame, description, hasScript) {
     return fetch(huffleHome + 'edit/' + id, {
       method: 'PUT',
       headers: {
@@ -111,7 +112,8 @@ export default class VideoService {
         title: title,
         totalFrames: totalFrames,
         currentFrame: currentFrame,
-        description: description
+        description: description,
+        script: hasScript
       })
     })
     .then(response => {

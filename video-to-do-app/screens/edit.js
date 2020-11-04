@@ -7,6 +7,8 @@ import {
   StyleSheet,
   ToastAndroid
 } from 'react-native';
+import ToggleSwitch from 'toggle-switch-react-native'
+
 import t from 'tcomb-form-native';
 import _ from 'lodash';
 
@@ -36,7 +38,8 @@ export default class EditScreen extends Component {
         totalFrames: this.item.totalFrames,
         currentFrame: this.item.currentFrame,
         description: this.item.description
-      }
+      },
+      hasScript: this.item.script
   };
   videoService = new VideoService();
   options = {
@@ -53,7 +56,7 @@ export default class EditScreen extends Component {
     if (value) {
       this.videoService.editVideo(this.item.id,
         value.title, value.totalFrames,
-        value.currentFrame, value.description)
+        value.currentFrame, value.description, this.state.hasScript)
         .then(() => {
           if (this.prevScreen == 'doing') {
             this.props.navigation.navigate('Tabs', {
@@ -71,6 +74,23 @@ export default class EditScreen extends Component {
     }
   }
 
+  changeValue(state) {
+    const value = this.refs.form.getValue();
+    if (value) {
+      this.setState({
+        value: {
+          title: value.title,
+          totalFrames: value.totalFrames,
+          currentFrame: value.currentFrame,
+          description: value.description
+        }
+      })
+    }
+    this.setState({
+      hasScript: state
+    });
+  }
+
   render() {
     return (
       <View style = { styles.container }>
@@ -79,6 +99,13 @@ export default class EditScreen extends Component {
           type = { Video }
           value = { this.state.value }
           options = { this.options }
+        />
+        <ToggleSwitch
+          label = "Has Script?"
+          isOn = { this.state.hasScript }
+          onToggle = { isOn => this.changeValue(isOn) }
+          onColor = "tomato"
+          labelStyle = {{ margin: 15 }}
         />
         <Button
           title = 'Update'

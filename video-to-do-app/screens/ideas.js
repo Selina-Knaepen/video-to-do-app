@@ -83,8 +83,26 @@ export default class IdeasScreen extends Component {
           <TouchableHighlight
             keyExtractor = { (item) => item.id }
             onPress = { () => this._onPress(item) }>
-            <View style = {{ backgroundColor: 'white' }}>
-              <Text style = {{ margin: 15 }}>{ item.title }</Text>
+            <View style = {{
+              backgroundColor: 'white',
+              flexDirection: 'row-reverse',
+              flex: 1,
+            }}>
+              <Text
+                style = {{
+                  margin: 15,
+                  backgroundColor: item.script ? 'lightgreen' : 'darksalmon',
+                  padding: 5,
+                  borderRadius: 12
+                }}
+              >
+                {item.script ? 'has script' : 'no script'}
+              </Text>
+              <Text
+                style = {{ margin: 15, alignSelf: 'flex-end', flex: 1 }}
+              >
+                { item.title }
+              </Text>
             </View>
           </TouchableHighlight>
         )}

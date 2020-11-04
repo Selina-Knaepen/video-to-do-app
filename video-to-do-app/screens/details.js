@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   Alert
 } from 'react-native';
+import ToggleSwitch from 'toggle-switch-react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -126,7 +127,16 @@ export default class DetailsScreen extends Component {
         <Text style = { styles.label }>Title:</Text>
         <Text>{ this.item.title }</Text>
 
-        <View style = {{ marginTop: 20 }}/>
+        <ToggleSwitch
+          label = 'Has Script?'
+          isOn = { this.item.script }
+          onColor = 'tomato'
+          labelStyle = {{ margin: 20, marginLeft: 0, fontWeight: 'bold' }}
+          size = 'small'
+          disabled = { true }
+        />
+
+        <View />
         <Text style = { styles.label }>Total Frames:</Text>
         <Text>{ this.item.totalFrames }</Text>
 

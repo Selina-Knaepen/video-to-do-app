@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 2,
     flex: 1
+  },
+  progressBar: {
+    alignSelf: 'center',
   }
 });
 
@@ -125,6 +128,7 @@ export default class DoingScreen extends Component {
             { this.state.selectedItem.title }
           </Text>
           <Progress.Circle
+            style = { styles.progressBar }
             showsText = { true }
             size = { 175 }
             borderColor = 'red'
