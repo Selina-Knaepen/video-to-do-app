@@ -40,7 +40,7 @@ public class VideoService {
 	}
 
 	public VideoResource createIdea(VideoCreateResoure videoCreateResoure) throws InvalidVideoException {
-		if (videoCreateResoure.getTotalFrames() <= 0) {
+		if (videoCreateResoure.getTotalFrames() < 0) {
 			throw new InvalidVideoException("The video needs to have more than 0 frames");
 		}
 
@@ -50,6 +50,7 @@ public class VideoService {
 		video.setDescription(videoCreateResoure.getDescription());
 		video.setCurrentFrame(0);
 		video.setVideoState(VideoState.IDEA);
+		video.setScript(videoCreateResoure.getScript());
 		return mapVideoToVideoResource(videoDao.save(video));
 	}
 
@@ -57,6 +58,11 @@ public class VideoService {
 		List<Video> doingVideos = videoDao.findVideoByVideoState(VideoState.DOING);
 		if (doingVideos.size() < 2) {
 			Video video = videoDao.findById(id).orElse(null);
+			if (!video.getScript()) {
+				throw new InvalidActionException("The video should have a script");
+			} else if (video.getTotalFrames() == 0) {
+				throw new InvalidActionException("The video should have a frame total to be moved to doing");
+			}
 			video.setVideoState(VideoState.DOING);
 			return mapVideoToVideoResource(videoDao.save(video));
 		} else {
@@ -89,6 +95,7 @@ public class VideoService {
 		video.setTotalFrames(videoCreateResoure.getTotalFrames());
 		video.setTitle(videoCreateResoure.getTitle());
 		video.setDescription(videoCreateResoure.getDescription());
+		video.setScript(videoCreateResoure.getScript());
 
 		return mapVideoToVideoResource(videoDao.save(video));
 	}
@@ -105,6 +112,7 @@ public class VideoService {
 		videoResource.setCurrentFrame(video.getCurrentFrame());
 		videoResource.setState(video.getVideoState().name());
 		videoResource.setDescription(video.getDescription());
+		videoResource.setScript(video.getScript());
 		return videoResource;
 	}
 }

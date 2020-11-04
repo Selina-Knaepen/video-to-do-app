@@ -7,6 +7,7 @@ public class VideoResource {
 	private int currentFrame;
 	private String state;
 	private String description;
+	private boolean hasScript;
 
 	public Long getId() {
 		return id;
@@ -54,5 +55,13 @@ public class VideoResource {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean getScript() {
+		return hasScript;
+	}
+
+	public void setScript(boolean hasScript) {
+		this.hasScript = hasScript;
 	}
 }

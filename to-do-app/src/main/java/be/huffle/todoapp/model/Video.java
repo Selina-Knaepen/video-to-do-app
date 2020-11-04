@@ -14,6 +14,7 @@ public class Video {
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private VideoState videoState;
+	private boolean hasScript;
 
 	public Long getId() {
 		return id;
@@ -61,5 +62,13 @@ public class Video {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean getScript() {
+		return hasScript;
+	}
+
+	public void setScript(boolean hasScript) {
+		this.hasScript = hasScript;
 	}
 }

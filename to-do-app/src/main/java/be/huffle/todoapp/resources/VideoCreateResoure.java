@@ -5,6 +5,7 @@ public class VideoCreateResoure {
 	private int totalFrames;
 	private int currentFrame;
 	private String description;
+	private boolean hasScript;
 
 	public String getTitle() {
 		return title;
@@ -36,5 +37,13 @@ public class VideoCreateResoure {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean getScript() {
+		return hasScript;
+	}
+
+	public void setScript(boolean hasScript) {
+		this.hasScript = hasScript;
 	}
 }
