@@ -1,8 +1,5 @@
-const seeHomeVideo = 'http://192.168.0.105:8080/video/';
-const huffleHomeVideo = 'http://huffle.ruska.space/video/';
-
-const seeHomeLabel = 'http://192.168.0.105:8080/labelTag/';
-const huffleHomeLabel = 'http://huffle.ruska.space/labelTag/';
+const huffleHomeVideo = 'https://video-to-do-app.seeseepuff.be/video/';
+const huffleHomeLabel = 'https://video-to-do-app.seeseepuff.be/labelTag/';
 
 export default class VideoService {
   getAllLabels() {
